@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إهداء خاص بعمر 🎁</title>
+  <!-- مكتبة تأثيرات الزهور المتحركة -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe6f0 0%, #ffc2d1 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* تصميم الكرت */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 25px;
+      box-shadow: 0 15px 35px rgba(219, 112, 147, 0.3);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      border: 3px solid #ffb3c6;
+      animation: popup 0.8s ease-out;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes popup {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      color: #ff4d6d;
+      font-size: 24px;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    p.message {
+      color: #590d22;
+      font-size: 20px;
+      line-height: 1.6;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .dedication {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #ff4d6d;
+    }
+
+    /* الأزرار */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      min-height: 50px;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      z-index: 20;
+    }
+
+    .btn-yes {
+      background-color: #ff4d6d;
+      color: white;
+      box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+      position: relative;
+      z-index: 30;
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.1);
+      background-color: #ff758f;
+    }
+
+    .btn-no {
+      background-color: #adb5bd;
+      color: white;
+      z-index: 20;
+    }
+
+    /* قسم الرسالة النهائية */
+    #final-message {
+      display: none;
+      animation: fadeIn 0.8s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- السؤال -->
+    <div id="question-section">
+      <h1>عمر هل تحب نفسك ؟ 🌸</h1>
+      <div class="buttons">
+        <button id="yes-btn" class="btn-yes">ايوا 💕</button>
+        <button id="no-btn" class="btn-no">لا 😜</button>
+      </div>
+    </div>
+
+    <!-- الكرت والرسالة النهائية -->
+    <div id="final-message">
+      <p class="message">
+        تعرف ليه ما تحب الحلويات هذي ؟ لاني بزر هههههه
+      </p>
+      <div class="dedication">
+        اهداء 🌷
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. تساقط الورد عند فتح الرابط
+    window.onload = function() {
+      var duration = 3 * 1000;
+      var end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 3,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ffb3c6', '#ff85a1', '#fbb1bd', '#f72585']
+        });
+        confetti({
+          particleCount: 3,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ffb3c6', '#ff85a1', '#fbb1bd', '#f72585']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    };
+
+    // ربط الأزرار بالأحداث بشكل مضمون
+    const yesBtn = document.getElementById('yes-btn');
+    const noBtn = document.getElementById('no-btn');
+    const questionSection = document.getElementById('question-section');
+    const finalMessage = document.getElementById('final-message');
+
+    // 2.
+هروب زر "لا" عند الاقتراب أو اللمس
+    function moveButton() {
+      const x = Math.random() * (window.innerWidth - noBtn.clientWidth - 50);
+      const y = Math.random() * (window.innerHeight - noBtn.clientHeight - 50);
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    }
+
+    noBtn.addEventListener('mouseover', moveButton);
+    noBtn.addEventListener('touchstart', moveButton);
+    noBtn.addEventListener('click', moveButton);
+
+    // 3. عند الضغط على "ايوا"
+    yesBtn.addEventListener('click', function() {
+      questionSection.style.display = 'none';
+      noBtn.style.display = 'none'; // إخفاء زر لا تماماً عند فتح الرسالة
+      finalMessage.style.display = 'block';
+
+      // انفجار ورد احتفالي
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+    });
+  </script>
+
+</body>
+</html>
